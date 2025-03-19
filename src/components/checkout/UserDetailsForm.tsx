@@ -56,14 +56,14 @@ const UserDetailsForm: React.FC<UserDetailsFormProps> = ({ onSubmitSuccess }) =>
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <TextFormField
+            <TextFormField<UserDetailsFormValues>
               control={form.control}
               name="fullName"
               label="Full Name"
               placeholder="John Doe"
             />
             
-            <TextFormField
+            <TextFormField<UserDetailsFormValues>
               control={form.control}
               name="email"
               label="Email"
@@ -71,7 +71,7 @@ const UserDetailsForm: React.FC<UserDetailsFormProps> = ({ onSubmitSuccess }) =>
             />
           </div>
           
-          <TextFormField
+          <TextFormField<UserDetailsFormValues>
             control={form.control}
             name="phoneNumber"
             label="Mobile Number"
@@ -82,14 +82,14 @@ const UserDetailsForm: React.FC<UserDetailsFormProps> = ({ onSubmitSuccess }) =>
             <h3 className="text-lg font-medium">Address Details</h3>
             
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <TextFormField
+              <TextFormField<UserDetailsFormValues>
                 control={form.control}
                 name="houseNumber"
                 label="House/Building Number"
                 placeholder="Apartment, suite, unit, etc."
               />
               
-              <TextFormField
+              <TextFormField<UserDetailsFormValues>
                 control={form.control}
                 name="roadName"
                 label="Road/Street Name"
@@ -97,7 +97,7 @@ const UserDetailsForm: React.FC<UserDetailsFormProps> = ({ onSubmitSuccess }) =>
               />
             </div>
             
-            <TextFormField
+            <TextFormField<UserDetailsFormValues>
               control={form.control}
               name="areaColony"
               label="Area/Colony"
@@ -105,21 +105,21 @@ const UserDetailsForm: React.FC<UserDetailsFormProps> = ({ onSubmitSuccess }) =>
             />
             
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              <TextFormField
+              <TextFormField<UserDetailsFormValues>
                 control={form.control}
                 name="city"
                 label="City"
                 placeholder="City"
               />
               
-              <TextFormField
+              <TextFormField<UserDetailsFormValues>
                 control={form.control}
                 name="state"
                 label="State"
                 placeholder="State"
               />
               
-              <TextFormField
+              <TextFormField<UserDetailsFormValues>
                 control={form.control}
                 name="pincode"
                 label="Pincode"

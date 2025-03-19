@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Control } from 'react-hook-form';
 import { Input } from '@/components/ui/input';
@@ -15,22 +14,22 @@ import {
 } from '@/components/ui/form';
 import { ProductFormValues, productCategories } from './product-form-schema';
 
-interface FormFieldProps {
-  control: Control<ProductFormValues>;
-  name: keyof ProductFormValues;
+interface FormFieldProps<T> {
+  control: Control<T>;
+  name: keyof T & string;
   label: string;
   placeholder?: string;
   description?: string;
 }
 
-export const TextFormField: React.FC<FormFieldProps> = ({
+export const TextFormField = <T extends Record<string, any>>({
   control, 
   name,
   label,
   placeholder,
-}) => (
+}: FormFieldProps<T>) => (
   <FormField
-    control={control}
+    control={control as any}
     name={name}
     render={({ field }) => (
       <FormItem>
@@ -48,15 +47,15 @@ export const TextFormField: React.FC<FormFieldProps> = ({
   />
 );
 
-export const NumberFormField: React.FC<FormFieldProps & { step?: string }> = ({
+export const NumberFormField = <T extends Record<string, any>>({
   control, 
   name,
   label,
   placeholder,
   step = "1",
-}) => (
+}: FormFieldProps<T> & { step?: string }) => (
   <FormField
-    control={control}
+    control={control as any}
     name={name}
     render={({ field }) => (
       <FormItem>
@@ -76,15 +75,15 @@ export const NumberFormField: React.FC<FormFieldProps & { step?: string }> = ({
   />
 );
 
-export const TextareaFormField: React.FC<FormFieldProps & { rows?: number }> = ({
+export const TextareaFormField = <T extends Record<string, any>>({
   control, 
   name,
   label,
   placeholder,
   rows = 4,
-}) => (
+}: FormFieldProps<T> & { rows?: number }) => (
   <FormField
-    control={control}
+    control={control as any}
     name={name}
     render={({ field }) => (
       <FormItem>
@@ -103,7 +102,7 @@ export const TextareaFormField: React.FC<FormFieldProps & { rows?: number }> = (
   />
 );
 
-export const CategoryFormField: React.FC<FormFieldProps> = ({
+export const CategoryFormField: React.FC<FormFieldProps<ProductFormValues>> = ({
   control, 
   name,
   label,
@@ -137,14 +136,14 @@ export const CategoryFormField: React.FC<FormFieldProps> = ({
   />
 );
 
-export const CheckboxFormField: React.FC<FormFieldProps> = ({
+export const CheckboxFormField = <T extends Record<string, any>>({
   control, 
   name,
   label,
   description,
-}) => (
+}: FormFieldProps<T>) => (
   <FormField
-    control={control}
+    control={control as any}
     name={name}
     render={({ field }) => (
       <FormItem className="flex flex-row items-start space-x-3 space-y-0">
@@ -163,15 +162,15 @@ export const CheckboxFormField: React.FC<FormFieldProps> = ({
   />
 );
 
-export const UrlFormField: React.FC<FormFieldProps> = ({
+export const UrlFormField = <T extends Record<string, any>>({
   control, 
   name,
   label,
   placeholder,
   description,
-}) => (
+}: FormFieldProps<T>) => (
   <FormField
-    control={control}
+    control={control as any}
     name={name}
     render={({ field }) => (
       <FormItem>
