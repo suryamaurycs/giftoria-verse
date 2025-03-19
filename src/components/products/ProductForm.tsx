@@ -67,8 +67,8 @@ const ProductForm: React.FC<ProductFormProps> = ({
 
   const handleSubmit = (values: z.infer<typeof formSchema>) => {
     onSubmit({
-      id: initialData?.id,
       ...values,
+      id: initialData?.id,
     });
   };
 

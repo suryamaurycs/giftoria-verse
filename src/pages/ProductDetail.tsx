@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import { ChevronLeft, Minus, Plus, Edit, ShoppingCart } from 'lucide-react';
@@ -9,7 +8,7 @@ import Footer from '@/components/layout/Footer';
 import CartDrawer from '@/components/cart/CartDrawer';
 import { useProducts } from '@/context/ProductContext';
 import { useCart } from '@/context/CartContext';
-import { toast } from '@/components/ui/sonner';
+import { toast } from 'sonner';
 
 const ProductDetail = () => {
   const { id } = useParams<{ id: string }>();
@@ -20,7 +19,6 @@ const ProductDetail = () => {
   
   const product = id ? getProduct(id) : undefined;
   
-  // Handle loading and not found states
   if (isLoading) {
     return (
       <>
@@ -66,7 +64,6 @@ const ProductDetail = () => {
     );
   }
   
-  // Format price
   const formatPrice = (price: number) => {
     return new Intl.NumberFormat('en-US', {
       style: 'currency',
@@ -74,7 +71,6 @@ const ProductDetail = () => {
     }).format(price);
   };
   
-  // Handle quantity changes
   const incrementQuantity = () => {
     if (quantity < product.inventory) {
       setQuantity(quantity + 1);
@@ -89,7 +85,6 @@ const ProductDetail = () => {
     }
   };
   
-  // Handle add to cart
   const handleAddToCart = () => {
     addToCart(product, quantity);
   };
@@ -100,7 +95,6 @@ const ProductDetail = () => {
       <CartDrawer />
       <PageWrapper>
         <div className="container mx-auto px-4 md:px-6 py-8">
-          {/* Breadcrumb */}
           <div className="flex items-center mb-6 text-sm">
             <Link to="/" className="text-gray-500 hover:text-giftoria-slate">Home</Link>
             <span className="mx-2 text-gray-400">/</span>
@@ -109,7 +103,6 @@ const ProductDetail = () => {
             <span className="text-giftoria-slate">{product.name}</span>
           </div>
           
-          {/* Back button (mobile) */}
           <Button
             variant="ghost"
             size="sm"
@@ -121,7 +114,6 @@ const ProductDetail = () => {
           </Button>
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 animate-fade-in">
-            {/* Product Image */}
             <div className="bg-gray-50 rounded-lg overflow-hidden">
               <img
                 src={product.imageUrl}
@@ -130,7 +122,6 @@ const ProductDetail = () => {
               />
             </div>
             
-            {/* Product Details */}
             <div className="animate-slide-up">
               <div className="mb-6">
                 <h1 className="text-3xl font-medium mb-2">{product.name}</h1>
@@ -158,7 +149,6 @@ const ProductDetail = () => {
                 </div>
               </div>
               
-              {/* Quantity selector */}
               <div className="flex items-center mb-6">
                 <span className="mr-4">Quantity</span>
                 <div className="flex items-center">
@@ -188,7 +178,6 @@ const ProductDetail = () => {
                 </div>
               </div>
               
-              {/* Action buttons */}
               <div className="flex flex-col space-y-3 sm:flex-row sm:space-y-0 sm:space-x-3">
                 <Button
                   className="flex-1 bg-giftoria-slate hover:bg-giftoria-slate/90"

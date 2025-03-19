@@ -1,7 +1,6 @@
-
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import { CartItem, Product } from '@/types';
-import { toast } from '@/components/ui/sonner';
+import { toast } from 'sonner';
 
 type CartContextType = {
   cartItems: CartItem[];
@@ -21,7 +20,6 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
   const [isCartOpen, setIsCartOpen] = useState(false);
 
-  // Load cart from localStorage on initial render
   useEffect(() => {
     const storedCart = localStorage.getItem('giftoria-cart');
     if (storedCart) {
@@ -34,7 +32,6 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }
   }, []);
 
-  // Save cart to localStorage whenever it changes
   useEffect(() => {
     localStorage.setItem('giftoria-cart', JSON.stringify(cartItems));
   }, [cartItems]);
@@ -50,7 +47,6 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
       );
 
       if (existingItem) {
-        // Update existing item quantity
         const updatedItems = prevItems.map((item) =>
           item.product.id === product.id
             ? { ...item, quantity: item.quantity + quantity }
@@ -59,7 +55,6 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
         toast.success(`Updated ${product.name} quantity in cart`);
         return updatedItems;
       } else {
-        // Add new item
         toast.success(`Added ${product.name} to cart`);
         return [...prevItems, { product, quantity }];
       }
@@ -97,7 +92,6 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
     toast.success('Cart cleared');
   };
 
-  // Calculate cart totals
   const cartTotal = cartItems.reduce(
     (total, item) => total + item.product.price * item.quantity,
     0

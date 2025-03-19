@@ -1,8 +1,7 @@
-
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import { Product, ProductFormData } from '@/types';
 import { sampleProducts } from '@/lib/data';
-import { toast } from '@/components/ui/sonner';
+import { toast } from 'sonner';
 import { v4 as uuidv4 } from 'uuid';
 
 type ProductContextType = {
@@ -21,11 +20,9 @@ export const ProductProvider: React.FC<{ children: React.ReactNode }> = ({ child
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    // In a real app, this would fetch from an API
     const fetchProducts = () => {
       setIsLoading(true);
       try {
-        // Simulate API call with timeout
         setTimeout(() => {
           const storedProducts = localStorage.getItem('giftoria-products');
           if (storedProducts) {
@@ -46,7 +43,6 @@ export const ProductProvider: React.FC<{ children: React.ReactNode }> = ({ child
     fetchProducts();
   }, []);
 
-  // Save products to localStorage whenever they change
   useEffect(() => {
     if (!isLoading) {
       localStorage.setItem('giftoria-products', JSON.stringify(products));
@@ -70,7 +66,7 @@ export const ProductProvider: React.FC<{ children: React.ReactNode }> = ({ child
     setProducts((prevProducts) =>
       prevProducts.map((product) =>
         product.id === productData.id
-          ? { ...product, ...productData }
+          ? { ...product, ...productData, createdAt: product.createdAt }
           : product
       )
     );

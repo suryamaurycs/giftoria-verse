@@ -16,6 +16,13 @@ export type CartItem = {
   quantity: number;
 };
 
-export type ProductFormData = Omit<Product, 'id' | 'createdAt'> & {
+export type ProductFormData = {
   id?: string;
+  name: string;
+  description: string;
+  price: number;
+  category: string;
+  imageUrl: string;
+  featured?: boolean;
+  inventory: number;
 };

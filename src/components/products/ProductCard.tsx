@@ -73,16 +73,18 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, featured = false }) 
             Add to Cart
           </Button>
           
-          <Button 
-            size="icon" 
-            variant="secondary"
-            className="bg-white hover:bg-gray-100"
-            as={Link}
+          <Link 
             to={`/product/${product.id}`}
             aria-label={`View ${product.name} details`}
           >
-            <Eye className="h-4 w-4" />
-          </Button>
+            <Button 
+              size="icon" 
+              variant="secondary"
+              className="bg-white hover:bg-gray-100"
+            >
+              <Eye className="h-4 w-4" />
+            </Button>
+          </Link>
         </div>
       </Link>
     </div>
