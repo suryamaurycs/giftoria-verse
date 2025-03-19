@@ -36,7 +36,11 @@ export const TextFormField: React.FC<FormFieldProps> = ({
       <FormItem>
         <FormLabel>{label}</FormLabel>
         <FormControl>
-          <Input placeholder={placeholder || `Enter ${label.toLowerCase()}`} {...field} />
+          <Input 
+            placeholder={placeholder || `Enter ${label.toLowerCase()}`} 
+            {...field} 
+            value={field.value as string}
+          />
         </FormControl>
         <FormMessage />
       </FormItem>
@@ -58,7 +62,13 @@ export const NumberFormField: React.FC<FormFieldProps & { step?: string }> = ({
       <FormItem>
         <FormLabel>{label}</FormLabel>
         <FormControl>
-          <Input type="number" step={step} placeholder={placeholder || "0"} {...field} />
+          <Input 
+            type="number" 
+            step={step} 
+            placeholder={placeholder || "0"} 
+            {...field} 
+            value={field.value as number}
+          />
         </FormControl>
         <FormMessage />
       </FormItem>
@@ -84,6 +94,7 @@ export const TextareaFormField: React.FC<FormFieldProps & { rows?: number }> = (
             placeholder={placeholder || `Enter ${label.toLowerCase()}`} 
             rows={rows} 
             {...field} 
+            value={field.value as string}
           />
         </FormControl>
         <FormMessage />
@@ -105,7 +116,7 @@ export const CategoryFormField: React.FC<FormFieldProps> = ({
         <FormLabel>{label}</FormLabel>
         <Select
           onValueChange={field.onChange}
-          defaultValue={field.value}
+          defaultValue={field.value as string}
         >
           <FormControl>
             <SelectTrigger>
@@ -139,7 +150,7 @@ export const CheckboxFormField: React.FC<FormFieldProps> = ({
       <FormItem className="flex flex-row items-start space-x-3 space-y-0">
         <FormControl>
           <Checkbox
-            checked={field.value}
+            checked={field.value as boolean}
             onCheckedChange={field.onChange}
           />
         </FormControl>
@@ -166,7 +177,11 @@ export const UrlFormField: React.FC<FormFieldProps> = ({
       <FormItem>
         <FormLabel>{label}</FormLabel>
         <FormControl>
-          <Input placeholder={placeholder || "https://example.com/image.jpg"} {...field} />
+          <Input 
+            placeholder={placeholder || "https://example.com/image.jpg"} 
+            {...field} 
+            value={field.value as string}
+          />
         </FormControl>
         {description && <FormDescription>{description}</FormDescription>}
         <FormMessage />
