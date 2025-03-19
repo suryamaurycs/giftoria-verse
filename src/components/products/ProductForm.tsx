@@ -66,10 +66,23 @@ const ProductForm: React.FC<ProductFormProps> = ({
   });
 
   const handleSubmit = (values: z.infer<typeof formSchema>) => {
-    onSubmit({
-      ...values,
-      id: initialData?.id,
-    });
+    // Create a ProductFormData object with all required fields
+    const productData: ProductFormData = {
+      name: values.name,
+      description: values.description,
+      price: values.price,
+      category: values.category,
+      imageUrl: values.imageUrl,
+      inventory: values.inventory,
+      featured: values.featured,
+    };
+    
+    // Only add the id if it exists in initialData
+    if (initialData?.id) {
+      productData.id = initialData.id;
+    }
+    
+    onSubmit(productData);
   };
 
   const categories = [
