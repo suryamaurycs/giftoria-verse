@@ -1,5 +1,5 @@
 
-import React from "react";
+import React, { useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
@@ -22,10 +22,10 @@ const userDetailsSchema = z.object({
   pincode: z.string().min(6, "Please enter a valid pincode."),
 });
 
-type UserDetailsFormValues = z.infer<typeof userDetailsSchema>;
+export type UserDetailsFormValues = z.infer<typeof userDetailsSchema>;
 
 interface UserDetailsFormProps {
-  onSubmitSuccess: () => void;
+  onSubmitSuccess: (data: UserDetailsFormValues) => void;
 }
 
 const UserDetailsForm: React.FC<UserDetailsFormProps> = ({ onSubmitSuccess }) => {
@@ -46,7 +46,7 @@ const UserDetailsForm: React.FC<UserDetailsFormProps> = ({ onSubmitSuccess }) =>
 
   const onSubmit = (data: UserDetailsFormValues) => {
     console.log("Form submitted with:", data);
-    onSubmitSuccess();
+    onSubmitSuccess(data);
   };
 
   return (
@@ -129,7 +129,7 @@ const UserDetailsForm: React.FC<UserDetailsFormProps> = ({ onSubmitSuccess }) =>
           </div>
           
           <Button type="submit" className="w-full bg-giftoria-slate hover:bg-giftoria-slate/90">
-            <Check className="mr-2 h-4 w-4" /> Place Order
+            <Check className="mr-2 h-4 w-4" /> Continue to Payment
           </Button>
         </form>
       </Form>
