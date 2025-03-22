@@ -20,6 +20,7 @@ const Checkout = () => {
   const handleUserDetailsSubmit = (data: UserDetailsFormValues) => {
     setUserDetails(data);
     setCheckoutStep('payment');
+    toast.success("Details saved successfully!");
   };
   
   const handleBackToDetails = () => {
@@ -71,6 +72,28 @@ const Checkout = () => {
           
           <div className="lg:col-span-1">
             <OrderSummary cartItems={cartItems} cartTotal={cartTotal} />
+            
+            {checkoutStep === 'payment' && (
+              <div className="mt-6 bg-gray-50 p-4 rounded-lg border">
+                <h3 className="font-medium mb-2">Shipping To:</h3>
+                <p className="text-sm">{userDetails?.fullName}</p>
+                <p className="text-sm">
+                  {userDetails?.houseNumber}, {userDetails?.roadName}, {userDetails?.areaColony}
+                </p>
+                <p className="text-sm">
+                  {userDetails?.city}, {userDetails?.state} - {userDetails?.pincode}
+                </p>
+                <p className="text-sm mt-1">{userDetails?.phoneNumber}</p>
+                <Button 
+                  variant="outline" 
+                  size="sm" 
+                  className="mt-2 w-full"
+                  onClick={handleBackToDetails}
+                >
+                  Edit Details
+                </Button>
+              </div>
+            )}
           </div>
         </div>
       </div>
