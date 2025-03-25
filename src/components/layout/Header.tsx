@@ -1,14 +1,17 @@
 
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
-import { ShoppingCart, Menu, X, Package } from 'lucide-react';
+import { Link, useNavigate } from 'react-router-dom';
+import { ShoppingCart, Menu, X, Package, LogIn, LogOut, User } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useCart } from '@/context/CartContext';
+import { useAuth } from '@/context/AuthContext';
 import { cn } from '@/lib/utils';
 import { useIsMobile } from '@/hooks/use-mobile';
 
 const Header = () => {
   const { cartCount, toggleCart } = useCart();
+  const { user, isAuthenticated, isAdmin, logout } = useAuth();
+  const navigate = useNavigate();
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const isMobile = useIsMobile();
@@ -32,12 +35,29 @@ const Header = () => {
     setMobileMenuOpen(false);
   };
 
-  const navLinks = [
-    { text: 'Home', path: '/' },
-    { text: 'Shop', path: '/shop' },
-    { text: 'About', path: '/about' },
-    { text: 'Dashboard', path: '/dashboard' },
-  ];
+  const handleLogout = () => {
+    logout();
+    navigate('/');
+    closeMobileMenu();
+  };
+
+  // Generate nav links based on user role
+  const getNavLinks = () => {
+    const links = [
+      { text: 'Home', path: '/' },
+      { text: 'Shop', path: '/shop' },
+      { text: 'About', path: '/about' },
+    ];
+
+    // Only show Dashboard for admin users
+    if (isAuthenticated && isAdmin) {
+      links.push({ text: 'Dashboard', path: '/dashboard' });
+    }
+
+    return links;
+  };
+
+  const navLinks = getNavLinks();
 
   return (
     <header
@@ -67,6 +87,36 @@ const Header = () => {
           </nav>
 
           <div className="flex items-center space-x-2">
+            {isAuthenticated ? (
+              <div className="flex items-center space-x-2">
+                <span className="hidden md:flex items-center text-sm text-gray-600">
+                  <User className="h-4 w-4 mr-1" />
+                  {user?.name}
+                </span>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={handleLogout}
+                  className="hidden md:flex animate-fade-in"
+                >
+                  <LogOut className="h-4 w-4 mr-1" />
+                  Sign Out
+                </Button>
+              </div>
+            ) : (
+              <Button
+                variant="outline"
+                size="sm"
+                asChild
+                className="hidden md:flex animate-fade-in"
+              >
+                <Link to="/login">
+                  <LogIn className="h-4 w-4 mr-1" />
+                  Sign In
+                </Link>
+              </Button>
+            )}
+
             <Button
               variant="ghost"
               size="icon"
@@ -115,6 +165,29 @@ const Header = () => {
                 {link.text}
               </Link>
             ))}
+
+            {isAuthenticated ? (
+              <Button
+                variant="outline"
+                onClick={handleLogout}
+                className="w-full justify-center"
+              >
+                <LogOut className="h-4 w-4 mr-2" />
+                Sign Out
+              </Button>
+            ) : (
+              <Button
+                variant="outline"
+                asChild
+                className="w-full justify-center"
+                onClick={closeMobileMenu}
+              >
+                <Link to="/login">
+                  <LogIn className="h-4 w-4 mr-2" />
+                  Sign In
+                </Link>
+              </Button>
+            )}
           </nav>
         </div>
       )}
