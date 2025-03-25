@@ -8,6 +8,7 @@ import Footer from '@/components/layout/Footer';
 import CartDrawer from '@/components/cart/CartDrawer';
 import { useProducts } from '@/context/ProductContext';
 import { useCart } from '@/context/CartContext';
+import { useAuth } from '@/context/AuthContext';
 import { toast } from 'sonner';
 
 const ProductDetail = () => {
@@ -15,6 +16,7 @@ const ProductDetail = () => {
   const navigate = useNavigate();
   const { getProduct, isLoading } = useProducts();
   const { addToCart } = useCart();
+  const { isAdmin } = useAuth();
   const [quantity, setQuantity] = useState(1);
   
   const product = id ? getProduct(id) : undefined;
@@ -188,15 +190,17 @@ const ProductDetail = () => {
                   Add to Cart
                 </Button>
                 
-                <Button
-                  variant="outline"
-                  asChild
-                >
-                  <Link to={`/dashboard/edit-product/${product.id}`}>
-                    <Edit className="mr-2 h-4 w-4" />
-                    Edit
-                  </Link>
-                </Button>
+                {isAdmin && (
+                  <Button
+                    variant="outline"
+                    asChild
+                  >
+                    <Link to={`/dashboard/edit-product/${product.id}`}>
+                      <Edit className="mr-2 h-4 w-4" />
+                      Edit
+                    </Link>
+                  </Button>
+                )}
               </div>
             </div>
           </div>
